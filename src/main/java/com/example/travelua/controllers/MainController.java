@@ -52,4 +52,10 @@ public class MainController {
     public Travel putTravel(@RequestParam String name, @RequestBody Travel travel) {
         return travelService.updateTravel(name, travel);
     }
+
+    @GetMapping("/convert")
+    public double convertPriceOfTravelFromUAHToAnotherCurrency(@RequestParam(name = "currency") String currency,
+                                                               @RequestParam(name = "amount") double amount) {
+        return travelService.convertPriceFromUAHToAnotherCurrency(currency, amount);
+    }
 }

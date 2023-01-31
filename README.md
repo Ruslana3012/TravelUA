@@ -55,3 +55,9 @@
 * `description` — is the travel description, that should to update.
 
 ***
+
+`GET <host>/convert` - converts price of travel from UAH to another currency, where:
+* `currency` - is the currency in which the price should be displayed;
+* `amount` - is the travel price.
+
+***

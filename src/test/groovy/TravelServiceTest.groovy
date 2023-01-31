@@ -1,11 +1,13 @@
 import com.example.travelua.models.Travel
 import com.example.travelua.repositories.TravelRepository
+import com.example.travelua.services.Converter
 import com.example.travelua.services.TravelService
 import spock.lang.Specification
 
 class TravelServiceTest extends Specification {
     private final travelRepository = Mock(TravelRepository)
-    private final travelService = new TravelService(travelRepository)
+    private final converter = Mock(Converter)
+    private final travelService = new TravelService(travelRepository, converter)
     private final NAME = "Блакитні озера Чернігівщини"
     private final CITY = "м. Чернігів"
     private final FROM_DATE = "2023-04-03"
@@ -136,5 +138,16 @@ class TravelServiceTest extends Specification {
 
         and:
         result == new Travel(1L, NAME, CITY, FROM_DATE, TO_DATE, 1600, DESCRIPTION)
+    }
+
+    def "Convert price of travel from UAH to another currency"() {
+        when:
+        def result = travelService.convertPriceFromUAHToAnotherCurrency("USD", 900)
+
+        then:
+        1 * converter.convert("USD", PRICE) >> 24.509231
+
+        and:
+        result == 24.509231
     }
 }

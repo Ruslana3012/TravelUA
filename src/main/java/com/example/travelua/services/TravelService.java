@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TravelService {
     private final TravelRepository travelRepository;
+    private final Converter converter;
 
     public void saveNewTravel(Travel travel) {
         travelRepository.save(travel);
@@ -52,5 +53,9 @@ public class TravelService {
         if (updateTravel.getDescription() != null) newTravel.setDescription(updateTravel.getDescription());
 
         return travelRepository.save(newTravel);
+    }
+
+    public double convertPriceFromUAHToAnotherCurrency(String currency, double amount) {
+        return converter.convert(currency, amount);
     }
 }
